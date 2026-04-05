@@ -1,7 +1,8 @@
 {
-  "annotations": { "list": [] },
+  "annotations": {
+    "list": []
+  },
   "editable": true,
-  "gnetId": null,
   "graphTooltip": 0,
   "panels": [
     {
@@ -13,18 +14,25 @@
           "refId": "A"
         }
       ],
-      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 }
-    },
-    {
-      "type": "timeseries",
-      "title": "Memory Used",
-      "targets": [
-        {
-          "expr": "redis_memory_used_bytes",
-          "refId": "A"
-        }
-      ],
-      "gridPos": { "h": 8, "w": 12, "x": 6, "y": 0 }
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center"
+      }
     },
     {
       "type": "stat",
@@ -35,34 +43,403 @@
           "refId": "A"
         }
       ],
-      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 4 }
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 0
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center"
+      }
     },
     {
-      "type": "timeseries",
-      "title": "Commands/sec",
+      "type": "stat",
+      "title": "Blocked Clients",
       "targets": [
         {
-          "expr": "rate(redis_commands_processed_total[1m])",
+          "expr": "redis_blocked_clients",
           "refId": "A"
         }
       ],
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 }
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 0
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center"
+      }
     },
     {
-      "type": "timeseries",
-      "title": "DB Keys",
+      "type": "stat",
+      "title": "DB0 Keys",
       "targets": [
         {
           "expr": "redis_db_keys{db=\"db0\"}",
           "refId": "A"
         }
       ],
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 }
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 0
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Expiring Keys",
+      "targets": [
+        {
+          "expr": "redis_db_keys_expiring{db=\"db0\"}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 0
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Connections Received",
+      "targets": [
+        {
+          "expr": "redis_connections_received_total",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 0
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Memory Used",
+      "targets": [
+        {
+          "expr": "redis_memory_used_bytes",
+          "refId": "A",
+          "legendFormat": "Used"
+        },
+        {
+          "expr": "redis_memory_used_peak_bytes",
+          "refId": "B",
+          "legendFormat": "Peak"
+        },
+        {
+          "expr": "redis_memory_used_rss_bytes",
+          "refId": "C",
+          "legendFormat": "RSS"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Memory Fragmentation Ratio",
+      "targets": [
+        {
+          "expr": "redis_mem_fragmentation_ratio",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "options": {
+        "legend": {
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Commands per Second",
+      "targets": [
+        {
+          "expr": "rate(redis_commands_processed_total[1m])",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 12
+      },
+      "options": {
+        "legend": {
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Keyspace Hits vs Misses",
+      "targets": [
+        {
+          "expr": "rate(redis_keyspace_hits_total[1m])",
+          "refId": "A",
+          "legendFormat": "Hits/sec"
+        },
+        {
+          "expr": "rate(redis_keyspace_misses_total[1m])",
+          "refId": "B",
+          "legendFormat": "Misses/sec"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 12
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Network Throughput",
+      "targets": [
+        {
+          "expr": "rate(redis_net_input_bytes_total[1m])",
+          "refId": "A",
+          "legendFormat": "In"
+        },
+        {
+          "expr": "rate(redis_net_output_bytes_total[1m])",
+          "refId": "B",
+          "legendFormat": "Out"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 12
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "DB0 Key Counts",
+      "targets": [
+        {
+          "expr": "redis_db_keys{db=\"db0\"}",
+          "refId": "A",
+          "legendFormat": "Keys"
+        },
+        {
+          "expr": "redis_db_keys_expiring{db=\"db0\"}",
+          "refId": "B",
+          "legendFormat": "Expiring"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 20
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Expired vs Evicted Keys",
+      "targets": [
+        {
+          "expr": "rate(redis_expired_keys_total[1m])",
+          "refId": "A",
+          "legendFormat": "Expired/sec"
+        },
+        {
+          "expr": "rate(redis_evicted_keys_total[1m])",
+          "refId": "B",
+          "legendFormat": "Evicted/sec"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 20
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "CPU Usage",
+      "targets": [
+        {
+          "expr": "rate(redis_cpu_sys_seconds_total[1m])",
+          "refId": "A",
+          "legendFormat": "System"
+        },
+        {
+          "expr": "rate(redis_cpu_user_seconds_total[1m])",
+          "refId": "B",
+          "legendFormat": "User"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 20
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
     }
   ],
   "schemaVersion": 38,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "redis",
+    "iseeu",
+    "monitoring"
+  ],
   "title": "Redis Overview",
-  "version": 1
+  "version": 2
 }
